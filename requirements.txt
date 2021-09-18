@@ -1,4 +1,4 @@
-aiohttp
-asyncio
-discord-py-interactions
-discord.py
+aiohttp==3.7.4
+asyncio==3.4.3
+discord-py-interactions==3.0.2
+discord.py==1.7.3
