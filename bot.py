@@ -74,7 +74,12 @@ async def on_ready():
 # Setup the game status task of the bot
 @tasks.loop(minutes=1.0)
 async def status_task():
-    statuses = ["with you!", "with Krypton!", f"{config['bot_prefix']}help", "with humans!"]
+    statuses = [
+        "with you!",
+        "with Krypton!",
+        f"{config['bot_prefix']}help",
+        "with humans!",
+    ]
     await bot.change_presence(activity=discord.Game(random.choice(statuses)))
 
 
@@ -109,7 +114,8 @@ async def on_slash_command(ctx: SlashContext):
     split = fullCommandName.split(" ")
     executedCommand = str(split[0])
     print(
-        f"Executed {executedCommand} command in {ctx.guild.name} (ID: {ctx.guild.id}) by {ctx.author} (ID: {ctx.author.id})")
+        f"Executed {executedCommand} command in {ctx.guild.name} (ID: {ctx.guild.id}) by {ctx.author} (ID: {ctx.author.id})"
+    )
 
 
 # The code in this event is executed every time a valid commands catches an error

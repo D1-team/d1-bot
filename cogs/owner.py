@@ -28,10 +28,7 @@ class owner(commands.Cog, name="owner"):
     def __init__(self, bot):
         self.bot = bot
 
-    @cog_ext.cog_slash(
-        name="shutdown",
-        description="Make the bot shutdown.",
-    )
+    @cog_ext.cog_slash(name="shutdown", description="Make the bot shutdown.")
     async def shutdown(self, context: SlashContext):
         """
         Make the bot shutdown.
@@ -45,8 +42,7 @@ class owner(commands.Cog, name="owner"):
 
         if context.author.id in config["owners"]:
             embed = discord.Embed(
-                description="Shutting down. Bye! :wave:",
-                color=0x42F56C
+                description="Shutting down. Bye! :wave:", color=0x42F56C
             )
             await context.send(embed=embed)
             await self.bot.close()
@@ -54,7 +50,7 @@ class owner(commands.Cog, name="owner"):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have the permission to use this command.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
 
@@ -66,7 +62,7 @@ class owner(commands.Cog, name="owner"):
                 name="message",
                 description="The message you want me to repeat.",
                 option_type=3,
-                required=True
+                required=True,
             )
         ],
     )
@@ -87,7 +83,7 @@ class owner(commands.Cog, name="owner"):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have the permission to use this command.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
 
@@ -99,7 +95,7 @@ class owner(commands.Cog, name="owner"):
                 name="message",
                 description="The message you want me to repeat.",
                 option_type=3,
-                required=True
+                required=True,
             )
         ],
     )
@@ -115,22 +111,18 @@ class owner(commands.Cog, name="owner"):
             return
 
         if context.author.id in config["owners"]:
-            embed = discord.Embed(
-                description=message,
-                color=0x42F56C
-            )
+            embed = discord.Embed(description=message, color=0x42F56C)
             await context.send(embed=embed)
         else:
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have the permission to use this command.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
 
     @cog_ext.cog_slash(
-        name="blacklist",
-        description="Get the list of all blacklisted users.",
+        name="blacklist", description="Get the list of all blacklisted users."
     )
     async def blacklist(self, context: SlashContext):
         """
@@ -149,7 +141,7 @@ class owner(commands.Cog, name="owner"):
             embed = discord.Embed(
                 title=f"There are currently {len(blacklist['ids'])} blacklisted IDs",
                 description=f"{', '.join(str(id) for id in blacklist['ids'])}",
-                color=0x0000FF
+                color=0x0000FF,
             )
             await context.send(embed=embed)
 
@@ -162,7 +154,7 @@ class owner(commands.Cog, name="owner"):
                 name="user",
                 description="The user you want to add to the blacklist.",
                 option_type=6,
-                required=True
+                required=True,
             )
         ],
     )
@@ -182,11 +174,11 @@ class owner(commands.Cog, name="owner"):
             try:
                 with open("blacklist.json") as file:
                     blacklist = json.load(file)
-                if (userID in blacklist['ids']):
+                if userID in blacklist["ids"]:
                     embed = discord.Embed(
                         title="Error!",
                         description=f"**{user.name}** is already in the blacklist.",
-                        color=0xE02B2B
+                        color=0xE02B2B,
                     )
                     await context.send(embed=embed)
                     return
@@ -194,7 +186,7 @@ class owner(commands.Cog, name="owner"):
                 embed = discord.Embed(
                     title="User Blacklisted",
                     description=f"**{user.name}** has been successfully added to the blacklist",
-                    color=0x42F56C
+                    color=0x42F56C,
                 )
                 with open("blacklist.json") as file:
                     blacklist = json.load(file)
@@ -206,14 +198,14 @@ class owner(commands.Cog, name="owner"):
                 embed = discord.Embed(
                     title="Error!",
                     description=f"An unknown error occurred when trying to add **{user.name}** to the blacklist.",
-                    color=0xE02B2B
+                    color=0xE02B2B,
                 )
                 await context.send(embed=embed)
         else:
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have the permission to use this command.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
 
@@ -226,7 +218,7 @@ class owner(commands.Cog, name="owner"):
                 name="user",
                 description="The user you want to remove from the blacklist.",
                 option_type=6,
-                required=True
+                required=True,
             )
         ],
     )
@@ -248,7 +240,7 @@ class owner(commands.Cog, name="owner"):
                 embed = discord.Embed(
                     title="User removed from blacklist",
                     description=f"**{user.name}** has been successfully removed from the blacklist",
-                    color=0x42F56C
+                    color=0x42F56C,
                 )
                 with open("blacklist.json") as file:
                     blacklist = json.load(file)
@@ -260,14 +252,14 @@ class owner(commands.Cog, name="owner"):
                 embed = discord.Embed(
                     title="Error!",
                     description=f"**{user.name}** is not in the blacklist.",
-                    color=0xE02B2B
+                    color=0xE02B2B,
                 )
                 await context.send(embed=embed)
         else:
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have the permission to use this command.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
 

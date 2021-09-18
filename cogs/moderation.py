@@ -27,24 +27,26 @@ class moderation(commands.Cog, name="moderation"):
         self.bot = bot
 
     @cog_ext.cog_slash(
-        name='kick',
+        name="kick",
         description="Kick a user out of the server.",
         options=[
             create_option(
                 name="user",
                 description="The user you want to kick.",
                 option_type=6,
-                required=True
+                required=True,
             ),
             create_option(
                 name="reason",
                 description="The reason you kicked the user.",
                 option_type=3,
-                required=False
-            )
+                required=False,
+            ),
         ],
     )
-    async def kick(self, context: SlashContext, user: discord.User, reason: str = "Not specified"):
+    async def kick(
+        self, context: SlashContext, user: discord.User, reason: str = "Not specified"
+    ):
         """
         Kick a user out of the server.
         """
@@ -53,7 +55,7 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have enough permissions to kick this user.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             return await context.send(embed=embed)
         member = await context.guild.fetch_member(user.id)
@@ -61,7 +63,7 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description="User has Admin permissions.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
         else:
@@ -70,12 +72,9 @@ class moderation(commands.Cog, name="moderation"):
                 embed = discord.Embed(
                     title="User Kicked!",
                     description=f"**{member}** was kicked by **{context.author}**!",
-                    color=0x42F56C
+                    color=0x42F56C,
                 )
-                embed.add_field(
-                    name="Reason:",
-                    value=reason
-                )
+                embed.add_field(name="Reason:", value=reason)
                 await context.send(embed=embed)
                 try:
                     await member.send(
@@ -87,29 +86,31 @@ class moderation(commands.Cog, name="moderation"):
                 embed = discord.Embed(
                     title="Error!",
                     description="An error occurred while trying to kick the user. Make sure my role is above the role of the user you want to kick.",
-                    color=0xE02B2B
+                    color=0xE02B2B,
                 )
                 await context.message.channel.send(embed=embed)
 
     @cog_ext.cog_slash(
-        name='nick',
+        name="nick",
         description="Change the nickname of a user on a server.",
         options=[
             create_option(
                 name="user",
                 description="The user you want to change the nickname.",
                 option_type=6,
-                required=True
+                required=True,
             ),
             create_option(
                 name="nickname",
                 description="The new nickname of the user.",
                 option_type=3,
-                required=False
-            )
+                required=False,
+            ),
         ],
     )
-    async def nick(self, context: SlashContext, user: discord.User, nickname: str = None):
+    async def nick(
+        self, context: SlashContext, user: discord.User, nickname: str = None
+    ):
         """
         Change the nickname of a user on a server.
         """
@@ -118,7 +119,7 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have enough permissions to change the nickname of this user.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             return await context.send(embed=embed)
         member = await context.guild.fetch_member(user.id)
@@ -127,33 +128,33 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Changed Nickname!",
                 description=f"**{member}'s** new nickname is **{nickname}**!",
-                color=0x42F56C
+                color=0x42F56C,
             )
             await context.send(embed=embed)
         except:
             embed = discord.Embed(
                 title="Error!",
                 description="An error occurred while trying to change the nickname of the user. Make sure my role is above the role of the user you want to change the nickname.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.message.channel.send(embed=embed)
 
     @cog_ext.cog_slash(
-        name='ban',
+        name="ban",
         description="Bans a user from the server.",
         options=[
             create_option(
                 name="user",
                 description="The user you want to ban.",
                 option_type=6,
-                required=True
+                required=True,
             ),
             create_option(
                 name="reason",
                 description="The reason you banned the user.",
                 option_type=3,
-                required=False
-            )
+                required=False,
+            ),
         ],
     )
     async def ban(self, context, user: discord.User, reason: str = "Not specified"):
@@ -165,7 +166,7 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have enough permissions to ban this user.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             return await context.send(embed=embed)
         member = await context.guild.fetch_member(user.id)
@@ -174,7 +175,7 @@ class moderation(commands.Cog, name="moderation"):
                 embed = discord.Embed(
                     title="Error!",
                     description="User has Admin permissions.",
-                    color=0xE02B2B
+                    color=0xE02B2B,
                 )
                 await context.send(embed=embed)
             else:
@@ -182,38 +183,37 @@ class moderation(commands.Cog, name="moderation"):
                 embed = discord.Embed(
                     title="User Banned!",
                     description=f"**{member}** was banned by **{context.author}**!",
-                    color=0x42F56C
+                    color=0x42F56C,
                 )
-                embed.add_field(
-                    name="Reason:",
-                    value=reason
-                )
+                embed.add_field(name="Reason:", value=reason)
                 await context.send(embed=embed)
-                await member.send(f"You were banned by **{context.author}**!\nReason: {reason}")
+                await member.send(
+                    f"You were banned by **{context.author}**!\nReason: {reason}"
+                )
         except:
             embed = discord.Embed(
                 title="Error!",
                 description="An error occurred while trying to ban the user. Make sure my role is above the role of the user you want to ban.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
 
     @cog_ext.cog_slash(
-        name='warn',
+        name="warn",
         description="Warns a user from the server.",
         options=[
             create_option(
                 name="user",
                 description="The user you want to warn.",
                 option_type=6,
-                required=True
+                required=True,
             ),
             create_option(
                 name="reason",
                 description="The reason you warned the user.",
                 option_type=3,
-                required=False
-            )
+                required=False,
+            ),
         ],
     )
     async def warn(self, context, user: discord.User, reason: str = "Not specified"):
@@ -225,34 +225,33 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have enough permissions to warn this user.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             return await context.send(embed=embed)
         member = await context.guild.fetch_member(user.id)
         embed = discord.Embed(
             title="User Warned!",
             description=f"**{member}** was warned by **{context.author}**!",
-            color=0x42F56C
+            color=0x42F56C,
         )
-        embed.add_field(
-            name="Reason:",
-            value=reason
-        )
+        embed.add_field(name="Reason:", value=reason)
         await context.send(embed=embed)
         try:
-            await member.send(f"You were warned by **{context.author}**!\nReason: {reason}")
+            await member.send(
+                f"You were warned by **{context.author}**!\nReason: {reason}"
+            )
         except:
             pass
 
     @cog_ext.cog_slash(
-        name='purge',
+        name="purge",
         description="Delete a number of messages.",
         options=[
             create_option(
                 name="amount",
                 description="The amount of messages you want to delete.",
                 option_type=4,
-                required=True
+                required=True,
             )
         ],
     )
@@ -262,11 +261,14 @@ class moderation(commands.Cog, name="moderation"):
         Delete a number of messages.
         """
         author = await context.guild.fetch_member(context.author_id)
-        if not author.guild_permissions.manage_messages or not author.guild_permissions.manage_channels:
+        if (
+            not author.guild_permissions.manage_messages
+            or not author.guild_permissions.manage_channels
+        ):
             embed = discord.Embed(
                 title="Error!",
                 description="You don't have enough permissions purge the chat.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             return await context.send(embed=embed)
         try:
@@ -275,7 +277,7 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description=f"`{amount}` is not a valid number.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
             return
@@ -283,7 +285,7 @@ class moderation(commands.Cog, name="moderation"):
             embed = discord.Embed(
                 title="Error!",
                 description=f"`{amount}` is not a valid number.",
-                color=0xE02B2B
+                color=0xE02B2B,
             )
             await context.send(embed=embed)
             return
@@ -291,7 +293,7 @@ class moderation(commands.Cog, name="moderation"):
         embed = discord.Embed(
             title="Chat Cleared!",
             description=f"**{context.author}** cleared **{len(purged_messages)}** messages!",
-            color=0x42F56C
+            color=0x42F56C,
         )
         await context.send(embed=embed)
 
