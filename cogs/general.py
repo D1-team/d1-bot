@@ -7,22 +7,15 @@ Version: 3.0
 """
 
 import json
-import os
 import platform
 import random
-import sys
 
+from app import settings
 import aiohttp
 import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 from discord_slash.utils.manage_commands import create_option
-
-if not os.path.isfile("config.json"):
-    sys.exit("'config.json' not found! Please add it and try again.")
-else:
-    with open("config.json") as file:
-        config = json.load(file)
 
 
 class general(commands.Cog, name="general"):
@@ -50,7 +43,7 @@ class general(commands.Cog, name="general"):
         embed.add_field(
             name="Python Version:", value=f"{platform.python_version()}", inline=True
         )
-        embed.add_field(name="Prefix:", value=f"{config['bot_prefix']}", inline=False)
+        embed.add_field(name="Prefix:", value=f"{settings.BOT_PREFIX}", inline=False)
         embed.set_footer(text=f"Requested by {context.author}")
         await context.send(embed=embed)
 
@@ -127,7 +120,7 @@ class general(commands.Cog, name="general"):
             return
 
         embed = discord.Embed(
-            description=f"Invite me by clicking [here](https://discordapp.com/oauth2/authorize?&client_id={config['application_id']}&scope=bot&permissions=470150263).",
+            description=f"Invite me by clicking [here](https://discordapp.com/oauth2/authorize?&client_id={settings.APPLICATION_ID}&scope=bot&permissions=470150263).",
             color=0xD75BF4,
         )
         try:

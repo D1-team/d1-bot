@@ -1,61 +1,17 @@
-""""
-Copyright © Krypton 2021 - https://github.com/kkrypt0nn
-Description:
-This is a template to create your own discord bot in python.
-
-Version: 3.0
-"""
-
-import json
 import os
 import platform
 import random
-import sys
-from cogs.template import Template
+from app import settings
 import discord
 from discord.ext import tasks
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 
-if not os.path.isfile("config.json"):
-    sys.exit("'config.json' not found! Please add it and try again.")
-else:
-    with open("config.json") as file:
-        config = json.load(file)
-
-"""	
-Setup bot intents (events restrictions)
-For more information about intents, please go to the following websites:
-https://discordpy.readthedocs.io/en/latest/intents.html
-https://discordpy.readthedocs.io/en/latest/intents.html#privileged-intents
-
-
-Default Intents:
-intents.messages = True
-intents.reactions = True
-intents.guilds = True
-intents.emojis = True
-intents.bans = True
-intents.guild_typing = False
-intents.typing = False
-intents.dm_messages = False
-intents.dm_reactions = False
-intents.dm_typing = False
-intents.guild_messages = True
-intents.guild_reactions = True
-intents.integrations = True
-intents.invites = True
-intents.voice_states = False
-intents.webhooks = False
-
-Privileged Intents (Needs to be enabled on dev page), please use them only if you need them:
-intents.presences = True
-intents.members = True
-"""
+from cogs.template import Template
 
 intents = discord.Intents.default()
 
-bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
+bot = Bot(command_prefix=settings.BOT_PREFIX, intents=intents)
 bot.add_cog(Template(bot))
 slash = SlashCommand(bot, sync_commands=True)
 
@@ -77,7 +33,7 @@ async def status_task():
     statuses = [
         "with you!",
         "with Krypton!",
-        f"{config['bot_prefix']}help",
+        f"{settings.BOT_PREFIX}help",
         "with humans!",
     ]
     await bot.change_presence(activity=discord.Game(random.choice(statuses)))
@@ -125,4 +81,4 @@ async def on_command_error(context, error):
 
 
 # Run the bot with the token
-bot.run(config["token"])
+bot.run(settings.TOKEN)

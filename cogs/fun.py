@@ -7,19 +7,11 @@ Version: 3.0
 """
 
 import json
-import os
-import sys
 
 import aiohttp
 import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
-
-if not os.path.isfile("config.json"):
-    sys.exit("'config.json' not found! Please add it and try again.")
-else:
-    with open("config.json") as file:
-        config = json.load(file)
 
 
 class Fun(commands.Cog, name="fun"):
@@ -41,7 +33,7 @@ class Fun(commands.Cog, name="fun"):
         # This will prevent your bot from stopping everything when doing a web request - see: https://discordpy.readthedocs.io/en/stable/faq.html#how-do-i-make-a-web-request
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                "https://uselessfacts.jsph.pl/random.json?language=en"
+                    "https://uselessfacts.jsph.pl/random.json?language=en"
             ) as request:
                 if request.status == 200:
                     data = await request.json()
