@@ -16,3 +16,5 @@ ps:
 	docker-compose ps
 bot:
 	docker-compose run --rm app python bot.py
+format:
+	docker-compose run --rm app black .
