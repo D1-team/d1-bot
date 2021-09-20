@@ -41,8 +41,6 @@ async def on_message(context):
     The code in this event is executed every time someone sends a message, with or without the prefix
     """
     message = context.content
-    if ("felix" or "pixcompu") in unidecode(message.lower()) and not context.author.bot:
-        await context.channel.send("felix es joto 😭👌")
     command_list = []
     for command in bot.commands:
         command_list.append(f"{settings.BOT_PREFIX}{command.name}")
