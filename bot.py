@@ -48,7 +48,7 @@ async def on_message(context):
         command_list.append(f"{settings.BOT_PREFIX}{command.name}")
     first_word = message.split(" ")[0]
     if first_word in command_list:
-        print(f"I will execute the command: {first_word}")
+        print(f"I will execute the command: {message}")
         await bot.process_commands(context)
 
 
