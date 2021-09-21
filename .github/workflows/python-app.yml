@@ -20,8 +20,7 @@ jobs:
       - name: Lint with flake8 and black
         run: make lint
       - name: Test with pytest
-        run: |
-          pytest
+        run: make test
 
   continuous-deployment:
     runs-on: ubuntu-latest
