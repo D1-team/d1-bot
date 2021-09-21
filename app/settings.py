@@ -1,3 +1,6 @@
+"""
+Module to import or set module-level variables.
+"""
 import os
 
 from dotenv import load_dotenv

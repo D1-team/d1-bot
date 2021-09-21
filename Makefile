@@ -19,6 +19,7 @@ format:
 	docker-compose run --rm app python3 -m isort .
 lint:
 	docker-compose run --rm app python3 -m black . --check
+	docker-compose run --rm app python3 -m isort . --check
 	docker-compose run --rm app python3 -m flake8 . --show-source
 	docker-compose run --rm app python3 -m pylint app src
 test:

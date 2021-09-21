@@ -4,7 +4,6 @@ import platform
 import discord
 from discord.ext import tasks
 from discord.ext.commands import Bot
-from unidecode import unidecode
 
 from app import settings
 

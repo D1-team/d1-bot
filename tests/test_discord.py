@@ -1,4 +1,6 @@
-import pytest
+"""
+Unit testing file example.
+"""
 
 
 def test_dummy():
