@@ -1,11 +1,12 @@
-import platform
 import os
+import platform
+
 import discord
-from discord.ext.commands import Bot
 from discord.ext import tasks
+from discord.ext.commands import Bot
+from unidecode import unidecode
 
 from app import settings
-from unidecode import unidecode
 
 intents = discord.Intents.default()
 
