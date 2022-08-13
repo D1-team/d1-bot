@@ -19,10 +19,10 @@ format:
 	docker exec -it app python3 -m isort .
 lint:
 	docker-compose up -d
-	docker exec -it app python3 -m black . --check
-	docker exec -it app python3 -m isort . --check
-	docker exec -it app python3 -m flake8 . --show-source
-	docker exec -it app python3 -m pylint app src
+	docker exec app python3 -m black . --check
+	docker exec app python3 -m isort . --check
+	docker exec app python3 -m flake8 . --show-source
+	docker exec app python3 -m pylint app src
 test:
 	docker-compose up -d
-	docker exec -it app python3 -m pytest
+	docker exec app python3 -m pytest
