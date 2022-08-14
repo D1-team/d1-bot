@@ -16,9 +16,24 @@ jobs:
         with:
           python-version: 3.9
       - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+      - name: Run isort
+        run: |
+          pip install isort==5.9.3
+          python -m isort . --check
+      - name: Run black
+        run: |
+          pip install black==22.3.0
+          python -m black . --check
+      - name: Run autoflake
+        run: |
+          pip install autoflake==1.4
+          python -m autoflake --exclude=__init__.py \
+            --remove-unused-variables --remove-all-unused-imports \
+            --in-place --recursive $MODE --check .
+      - name: Install dependencies
         run: make build
-      - name: Lint with flake8 and black
-        run: make lint
       - name: Test with pytest
         run: make test
 
