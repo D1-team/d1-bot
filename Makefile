@@ -5,12 +5,12 @@ init:
 	@make up
 	@make ps
 down:
-	docker-compose down --volumes --remove-orphans
-pull:
-	docker-compose pull
+	docker-compose down --volumes --remove-orphan
 build:
 	docker-compose build
-up: pull build
+stop:
+	docker-compose stop
+up:
 	docker-compose up -d
 ps:
 	docker-compose ps
