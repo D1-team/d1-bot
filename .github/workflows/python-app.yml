@@ -32,6 +32,8 @@ jobs:
           python -m autoflake --exclude=__init__.py \
             --remove-unused-variables --remove-all-unused-imports \
             --in-place --recursive $MODE --check .
+      - name: Create Env File
+        run: cp .env.dist .env
       - name: Install dependencies
         run: make build
       - name: Test with pytest
