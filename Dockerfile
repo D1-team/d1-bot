@@ -7,6 +7,8 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN pip install --upgrade pip
 
+ENV DJANGO_SETTINGS_MODULE="config.settings"
+
 WORKDIR /app
 
 # Install dependencies:

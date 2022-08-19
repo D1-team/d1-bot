@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    command: python bot.py
+    command: sh entrypoint.sh
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -11,3 +11,15 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
+    depends_on:
+      - postgres
+  postgres:
+    image: "postgres:13.2-alpine"
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres

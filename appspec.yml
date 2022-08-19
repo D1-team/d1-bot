@@ -5,7 +5,7 @@ files:
     destination: /home/ubuntu/d1-bot
 hooks:
   AfterInstall:
-    - location: setup.sh
+    - location: setup-docker.sh
       timeout: 300
       runas: ubuntu
   ApplicationStart:
