@@ -51,6 +51,6 @@ if __name__ == "__main__":
         "max_requests": 1000,
         "max_requests_jitter": 50,
     }
-    from config.asgi import application
+    from config.wsgi import application
 
     StandaloneApplication(application, options).run()

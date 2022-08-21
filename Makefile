@@ -36,3 +36,5 @@ migrate:
 	docker exec app python manage.py migrate
 logs:
 	docker-compose logs -f app
+statics:
+	docker exec -it app python manage.py collectstatic --noinput

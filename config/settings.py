@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 from config import env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -123,3 +123,24 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+USE_S3 = env.USE_S3
+PUBLIC_MEDIA_LOCATION = "media"
+PUBLIC_STATIC_LOCATION = "static"
+if USE_S3:
+    AWS_STORAGE_BUCKET_NAME = env.AWS_STORAGE_BUCKET_NAME
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_S3_CUSTOM_DOMAIN = env.AWS_S3_CUSTOM_DOMAIN
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+    # s3 static settings
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_STATIC_LOCATION}/"
+    STATICFILES_STORAGE = "evapacsback.storage_backends.StaticStorage"
+    # s3 public media settings
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+    DEFAULT_FILE_STORAGE = "evapacsback.storage_backends.PublicMediaStorage"
+else:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+    STATIC_URL = f"{env.SERVER_URL}/{PUBLIC_STATIC_LOCATION}/"
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+    MEDIA_URL = f"{env.SERVER_URL}/{PUBLIC_MEDIA_LOCATION}/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
