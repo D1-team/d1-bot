@@ -34,3 +34,5 @@ migrations:
 	@make format
 migrate:
 	docker exec app python manage.py migrate
+logs:
+	docker-compose logs -f app

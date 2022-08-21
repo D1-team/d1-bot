@@ -13,6 +13,8 @@ services:
       - ./:/app
     depends_on:
       - postgres
+    ports:
+      - "8000:8000"
   postgres:
     image: "postgres:13.2-alpine"
     container_name: postgres

@@ -8,6 +8,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip install --upgrade pip
 
 ENV DJANGO_SETTINGS_MODULE="config.settings"
+ENV DJANGO_ALLOW_ASYNC_UNSAFE=true
 
 WORKDIR /app
 

@@ -1,3 +1,4 @@
+import logging
 import os
 import platform
 
@@ -10,7 +11,9 @@ from config import env
 
 intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 
+logger = logging.getLogger(__name__)
 bot = Bot(command_prefix=env.BOT_PREFIX, intents=intents)
 
 
@@ -47,9 +50,10 @@ async def response_command(context, *args):
     try:
         from app.commands.response import process_response_command
 
-        response = process_response_command(arguments=args)
+        response = process_response_command(context=context, arguments=args)
         await context.channel.send(response)
     except Exception as errors:
+        logger.info(errors, exc_info=True)
         await context.channel.send(" ".join(errors.args))
 
 
@@ -68,5 +72,5 @@ async def on_message(context):
         await bot.process_commands(context)
 
 
-#django.setup()
+django.setup()
 bot.run(env.TOKEN)

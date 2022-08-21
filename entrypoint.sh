@@ -1,4 +1,4 @@
 #!/bin/bash
 
-python bot.py
-#python run.py
+python bot.py &
+python run.py
