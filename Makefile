@@ -10,7 +10,7 @@ build:
 	docker-compose build
 stop:
 	docker-compose stop
-up:
+app:
 	docker-compose up -d
 ps:
 	docker-compose ps
@@ -26,3 +26,15 @@ lint:
 test:
 	docker-compose up -d
 	docker exec app python3 -m pytest
+bash:
+	@make app
+	docker exec -it app /bin/bash
+migrations:
+	docker exec app python manage.py makemigrations app --no-input
+	@make format
+migrate:
+	docker exec app python manage.py migrate
+logs:
+	docker-compose logs -f app
+statics:
+	docker exec -it app python manage.py collectstatic --noinput

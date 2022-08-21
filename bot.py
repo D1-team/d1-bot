@@ -1,15 +1,20 @@
+import logging
 import os
 import platform
 
 import discord
+import django
 from discord.ext import tasks
 from discord.ext.commands import Bot
 
-from app import settings
+from config import env
 
 intents = discord.Intents.default()
+intents.members = True
+intents.message_content = True
 
-bot = Bot(command_prefix=settings.BOT_PREFIX, intents=intents)
+logger = logging.getLogger(__name__)
+bot = Bot(command_prefix=env.BOT_PREFIX, intents=intents)
 
 
 @bot.event
@@ -32,7 +37,24 @@ async def status_task():
     brief="Prints pong back to the channel.",
 )
 async def ping_command(context, *args):
-    await context.channel.send(" ".join(args))
+    try:
+        from app.commands.ping import ping_command_service
+
+        await context.channel.send(ping_command_service(arguments=args))
+    except Exception as errors:
+        await context.channel.send(" ".join(errors.args))
+
+
+@bot.command(name="response")
+async def response_command(context, *args):
+    try:
+        from app.commands.response import process_response_command
+
+        response = process_response_command(context=context, arguments=args)
+        await context.channel.send(response)
+    except Exception as errors:
+        logger.info(errors, exc_info=True)
+        await context.channel.send(" ".join(errors.args))
 
 
 @bot.event
@@ -43,11 +65,12 @@ async def on_message(context):
     message = context.content
     command_list = []
     for command in bot.commands:
-        command_list.append(f"{settings.BOT_PREFIX}{command.name}")
+        command_list.append(f"{env.BOT_PREFIX}{command.name}")
     first_word = message.split(" ")[0]
     if first_word in command_list:
         print(f"I will execute the command: {message}")
         await bot.process_commands(context)
 
 
-bot.run(settings.TOKEN)
+django.setup()
+bot.run(env.TOKEN)
